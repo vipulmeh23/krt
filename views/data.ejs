@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<h2>Twitter Data-Set</h2>
+	 	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<button type="submit" class="btn btn-success" onclick="window.history.back()">< Go Back</button>
+		</div>
+		<div class="panel-body">
+			<table class="table" class="table table-striped table-bordered table-responsive" cellpadding="0" cellspacing="0" width="100%">
+				<tbody>
+					<tr>
+			          <th>id</th>
+			          <td><%= tweet[0].id %></td>
+			        </tr>
+			        <tr>
+			          <th>fromUser</th>
+			          <td><%= tweet[0].fromUser %></td>
+			        </tr>
+			        <tr>
+			          <th>fromUserId</th>
+			          <td><%= tweet[0].fromUserId %></td>
+			        </tr>
+				    <tr>
+				      <th>fromUserName</th>
+				      <td><%= tweet[0].fromUserName %></td>
+					</tr>
+				    <tr>
+				      <th>twitterTweetId</th>
+				      <td><%= tweet[0].twitterTweetId %></td>
+					</tr>
+				    <tr>
+				      <th>LanguageCode</th>
+				      <td><%= tweet[0].LanguageCode %></td>
+					</tr>
+				    <tr>
+				      <th>profileImageUrl</th>
+				      <td><%= tweet[0].profileImageUrl %></td>
+					</tr>
+				    <tr>
+				      <th>source</th>
+				      <td><%= tweet[0].source %></td>
+					</tr>
+				    <tr>
+				      <th>text</th>
+				      <td><%= tweet[0].text %></td>
+					</tr>
+				    <tr>
+				      <th>latitude</th>
+				      <td><%= tweet[0].latitude %></td>
+					</tr>
+				    <tr>
+				      <th>longitude</th>
+				      <td><%= tweet[0].longitude %></td>
+					</tr>
+				    <tr>
+				      <th>createdAt</th>
+				      <td><%= tweet[0].createdAt %></td>
+					</tr>
+					<tr>
+				      <th>comment</th>
+				      <td><%= tweet[0].comment %></td>
+					</tr>
+			    </tbody>
+			</table>
+		</div>
+	</div>
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+</script> 

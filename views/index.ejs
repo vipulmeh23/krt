@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<h2>Twitter Data-Set</h2>
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<button type="submit" class="btn btn-success" onclick="window.history.back()">< Go Back</button>
+			</div>
+			<div class="panel-body">
+				<table id="twitterTable"  class="table table-striped table-bordered table-responsive" cellpadding="0" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th># ID</th> 
+							<th>Name</th>
+							<th>Tweet</th>
+							<th>Data of creation</th>
+							<th>Operations</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<th># ID</th> 
+							<th>Name</th>
+							<th>Tweet</th>
+							<th>Data of creation</th>
+							<th>Operations</th>
+						</tr>
+					</tfoot>
+				</table> 
+		     </div>
+	    </div>
+	</div>
+	<!-- Modal -->
+	<div id="modalPop" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+		<!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Add annotation</h4>
+	      </div>
+	      <div class="modal-body" id="infoBar">
+	      
+			<div class="form-group">
+			  <label for="comment">Comment:</label>
+			  <textarea class="form-control" rows="5" id="comment"></textarea>
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	      	<button type="submit" class="btn btn-success" id="saveUpdate" onclick="saveData(this)"><i class="glyphicon glyphicon-ok"></i> Update and save</button>
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</body>
+</html>
+<script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+function openModal(element)
+{
+	var id = $(element).data("id");
+	$("#modalPop").modal();
+	$("#saveUpdate").attr("data-id", id);
+}
+function saveData(element){
+	$("#info").remove();
+	var id      = $(element).data("id");
+	var comment = $("#comment").val();
+	if(comment == "")
+	{
+		$("#infoBar").prepend('<div id="info" class="alert alert-danger"><strong>Error!</strong> Comment cannot be blank.</div>');
+		return false;
+	}
+	$.ajax({
+		url: "/twitter/addcomment",
+		type: "POST",
+		data: {"id": id, "comment": comment },
+		beforeSend: function(){
+			$("#saveUpdate").html("Processing...").attr("disabled", true).addClass("disabled");
+		},
+		success: function(data){
+			//$("#saveUpdate").html("Update and save").removeClass('disabled');
+			$("#infoBar").prepend('<div id="info" class="alert alert-success"><strong>Success!</strong> Updated and saved comment.</div>');
+		},
+		complete: function(){
+			$("#info").fadeOut(3000, function(){
+				$("#saveUpdate").html("Update and save").attr("disabled", false).removeClass('disabled');	
+			});
+		}
+	});
+}
+$(document).ready(function () {
+		$('#modalPop').on('hidden.bs.modal', function () {
+			$("#saveUpdate").removeAttr("data-id");  
+		})
+        $('#twitterTable').DataTable({
+            "bProcessing": true,
+            "serverSide": true,
+            "info": true,
+            "stateSave": true,
+            "oLanguage": {
+            	"sProcessing": "Please wait..."
+            },
+            "ajax":{
+                "url": "/tweets",
+                "type": "GET",
+            },
+            "columns": [
+                { "data": function (data, type, row, meta) {
+                       return '<a href="twitter/view/' + data.id + '">' + data.id + '</a>';
+                   }, "width": "15%"
+                },
+                { "data": "fromUser", "width": "15%"},
+                { "data": "text", "width": "30%"},
+                { "data": "createdAt", "width": "25%" },
+                { "data":function (data, type, row, meta) {
+                       return '<a href="twitter/view/' + data.id + '"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0)""><span onclick="openModal(this)" id="popup" class="glyphicon glyphicon-comment" data-id="'+data.id+'"aria-hidden="true"></span></a>';
+                   }, "width": "15%"
+                }
+            ]
+        });
+        $('.dataTables_filter input[type="search"]').attr('placeholder','Type in #ID or tweet you want to search').css({'width':'250px','display':'inline-block'});
+});
+</script> 
