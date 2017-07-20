@@ -1,9 +1,6 @@
 # Twitter Application
 
-> Twitter Application is a nodejs/express js based web application. It does some operations on the data which 
-comes from MongoDb.To render view/html it uses EJS (embedded javascript). And on the back-end
-it uses Express.Js framework in vanilla form over the top of Node.Js. Views are primarily designed using Twitter Bootstrap
-and also uses server side implementation of Jquery Data-tables along with HTML and Jquery library.
+> Twitter Application is a Node.js/Express.js based web application. As a part of curriculum for Knowledge Representation Technologies, task was to take exceptionally large data-set store it in MongoDB and do CRUD (create read update delete) operation on them through a client. I used EJS (embedded JavaScript) to render views, on the back-end Express.Js framework in vanilla form over the top of Node.Js. Frontend was designed using Twitter Bootstrap along with a server side implementation of JQuery Data-tables and jQuery.
 
 ## Installation Instructions
 
